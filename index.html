@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Don't Press This Button</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            flex-direction: column;
+            transition: background-color 2s;
+        }
+
+        /* Fiery text animation */
+        .fire-text {
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: transparent;
+            text-shadow: 
+                0 0 5px #ff4500, 
+                0 0 10px #ff6347, 
+                0 0 20px #ff4500, 
+                0 0 30px #ff0000, 
+                0 0 40px #ff8c00, 
+                0 0 50px #ff4500;
+            background: linear-gradient(90deg, #ff0000, #ff4500, #ff8c00, #ff4500, #ff0000);
+            background-size: 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: flicker 2s infinite, moveGradient 5s infinite;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                opacity: 1;
+                text-shadow: 
+                    0 0 5px #ff4500, 
+                    0 0 10px #ff6347, 
+                    0 0 20px #ff4500, 
+                    0 0 30px #ff0000, 
+                    0 0 40px #ff8c00, 
+                    0 0 50px #ff4500;
+            }
+            20%, 24%, 55% {
+                opacity: 0.8;
+                text-shadow: 
+                    0 0 3px #ff4500, 
+                    0 0 8px #ff6347, 
+                    0 0 15px #ff4500, 
+                    0 0 25px #ff0000, 
+                    0 0 35px #ff8c00, 
+                    0 0 45px #ff4500;
+            }
+        }
+
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #message {
+            font-size: 2rem;
+            position: absolute;
+            top: 30%;
+            width: 100%;
+            text-align: center;
+            transition: color 2s;
+            padding-top: 2rem; /* Add padding to the top for two rows */
+        }
+
+        #theButton {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 1s ease-in-out;
+        }
+
+        #theButton:hover {
+            background-color: darkred;
+        }
+
+        #button-spacing {
+            height: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="message"></div>
+    <button id="theButton">DON'T PRESS THIS BUTTON</button>
+    <div id="button-spacing"></div>
+
+    <script>
+        const messages = [
+            "I thought I told you not to press the button.",
+            "Did you just do it again?!",
+            "Are you even paying attention?",
+            "Seriously, stop pressing the button.",
+            "What part of 'don't' do you not understand?",
+            "Do you think I enjoy this?",
+            "Please, for the love of pixels, stop.",
+            "You're officially on my naughty list.",
+            "This button is not a toy!",
+            "You're testing my patience.",
+            "I’m telling your mom.",
+            "You’re just here to cause chaos, aren’t you?",
+            "Does your finger need a hobby?",
+            "Do you press everything you’re told not to?",
+            "If you keep pressing, I’ll tell HR.",
+            "The button is crying now.",
+            "Great, now the button has trust issues.",
+            "Just one more press… kidding, stop!",
+            "What’s your end game here?",
+            "Do you know what 'reverse psychology' is?",
+            "Oh, so you like breaking rules?",
+            "You must be fun at elevators.",
+            "Stop pressing me! Wait, that sounded weird.",
+            "Congratulations, you broke the button.",
+            "You're why we can’t have nice things.",
+            "The definition of insanity is this.",
+            "You’re giving me a digital headache.",
+            "Is this your way of rebelling?",
+            "One more press and I call the cops.",
+            "Why are you like this?",
+            "You must be really bored.",
+            "Ever heard of self-control?",
+            "Your finger must be exhausted.",
+            "I hope this is worth it for you.",
+            "Do you enjoy seeing me suffer?",
+            "This button was my retirement plan.",
+            "You’re going to wear me out!",
+            "What did the button ever do to you?",
+            "At this point, I give up.",
+            "Fine. Press it all you want. I’m done."
+        ];
+
+        let pressCount = 0;
+        let movementState = 0;
+        const messageDiv = document.getElementById("message");
+        const button = document.getElementById("theButton");
+
+        button.addEventListener("click", () => {
+            if (pressCount < messages.length) {
+                messageDiv.innerText = messages[pressCount];
+            } else if (pressCount === messages.length) {
+                // Fade background to white over 5 seconds
+                document.body.style.transition = "background-color 5s";
+                document.body.style.backgroundColor = "white";
+                messageDiv.style.color = "black";
+                messageDiv.innerText = "Welcome to the afterlife. Everything will be fine if you do not press the button.";
+            } else {
+                // Handle button movements and Hell transition
+                if (movementState === 0) {
+                    button.style.left = "10%";
+                    button.style.bottom = "20%";
+                } else if (movementState === 1) {
+                    button.style.left = "80%";
+                    button.style.bottom = "20%";
+                } else if (movementState === 2) {
+                    button.style.top = "10%";
+                    button.style.left = "50%";
+                    button.style.transform = "translateX(-50%)";
+                    button.style.bottom = "auto";
+                } else if (movementState === 3) {
+                    messageDiv.innerText = "Are you sure about this?";
+                } else if (movementState === 4) {
+                    // Final Hell transition
+                    document.body.style.transition = "background-color 2s";
+                    document.body.style.backgroundColor = "black"; // Set final background color to black
+                    messageDiv.classList.add("fire-text"); // Apply fiery text effect
+                    messageDiv.innerText = "Welcome to Hell, Dumbass. Enjoy the scenery, because it's never changing again.";
+                    button.remove(); // Remove the button
+                }
+                movementState++;
+            }
+            pressCount++;
+        });
+    </script>
+</body>
+</html>
